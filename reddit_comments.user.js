@@ -4,8 +4,14 @@
 // @match http://www.reddit.com/r/*/comments/*
 // ==/UserScript==
 
+/*
+ * This hides comments on reddit that are less than (THRESHOLD) words long. 
+ * Reddit comments still suck but noticeably less so. Hidden comments
+ * are logged to the dev console so you can make sure you're not missing
+ * anything good (you're not).
+ */
+
 var THRESHOLD = 15;
-var DEBUG = true;
 
 //TODO: most time is spent in this function
 function get_comment_text(comment_elem) {
@@ -44,12 +50,12 @@ for (var x = 0; x < comments.length; x++) {
   var comment_text = get_comment_text(comments[x]);
 
   if (should_hide(comment_text)) {
-    console.log('An idiot said:' + comment_text);
+    console.log('Somebody said:' + comment_text);
     hide_comment(comments[x]);
     total_hidden++;
   }
 }
 
-console.log(total_hidden + ' idiots silenced in ' + (new Date() - starttime) + 'ms');
+console.log(total_hidden + ' comments hidden in ' + (new Date() - starttime) + 'ms');
 
 
